@@ -1,0 +1,1639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>$IRENGO - Luxury Stays & Africa Safaris</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #FF385C;
+            --primary-dark: #E31C5F;
+            --secondary: #00A699;
+            --safari: #D4AF37;
+            --dark: #222222;
+            --light-dark: #717171;
+            --light: #F7F7F7;
+            --border: #DDDDDD;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Circular', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            overflow-x: hidden;
+            color: var(--dark);
+        }
+        
+        /* Navigation */
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 12px 0;
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 24px;
+        }
+        
+        .nav-link {
+            color: var(--dark) !important;
+            font-weight: 500;
+            margin: 0 8px;
+            font-size: 14px;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary) !important;
+        }
+        
+        .safari-badge {
+            background: var(--safari);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 700;
+            margin-left: 5px;
+        }
+        
+        .user-menu {
+            border: 1px solid var(--border);
+            border-radius: 21px;
+            padding: 5px 5px 5px 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: box-shadow 0.2s ease;
+        }
+        
+        .user-menu:hover {
+            box-shadow: 0 2px 4px rgba(0,0,0,0.18);
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            height: 85vh;
+            overflow: hidden;
+        }
+        
+        .hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translateX(-50%) translateY(-50%);
+            z-index: -1;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5));
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            color: white;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            font-weight: 400;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        
+        /* Search Form */
+        .search-container {
+            background: white;
+            border-radius: 60px;
+            padding: 8px 8px 8px 24px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+        }
+        
+        .search-form {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .form-group {
+            margin-bottom: 0;
+            flex: 1;
+            padding: 0 12px;
+            border-right: 1px solid var(--border);
+        }
+        
+        .form-group:last-child {
+            border-right: none;
+        }
+        
+        .form-label {
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            display: block;
+        }
+        
+        .form-control {
+            border: none;
+            box-shadow: none;
+            padding: 4px 0;
+            font-size: 14px;
+            font-weight: 500;
+            width: 100%;
+        }
+        
+        .form-control:focus {
+            outline: none;
+        }
+        
+        .search-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 14px 24px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .search-btn:hover {
+            background: var(--primary-dark);
+            transform: scale(1.02);
+        }
+        
+        /* Loading Spinner */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Server Status */
+        .server-status {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            padding: 10px 15px;
+            border-radius: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            font-size: 12px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .status-online {
+            color: #00A699;
+        }
+        
+        .status-offline {
+            color: #FF385C;
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        
+        .online {
+            background: #00A699;
+        }
+        
+        .offline {
+            background: #FF385C;
+        }
+
+        /* Categories */
+        .categories-section {
+            padding: 60px 0 40px;
+        }
+        
+        .category-card {
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+            color: inherit;
+            text-decoration: none;
+        }
+        
+        .category-img {
+            height: 180px;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+        
+        .category-title {
+            font-weight: 600;
+            margin-top: 12px;
+            font-size: 15px;
+        }
+        
+        /* Safari Section */
+        .safari-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #1a2f1a 0%, #2d5a2d 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .safari-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.2;
+        }
+        
+        .safari-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .safari-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .safari-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.3);
+        }
+        
+        .safari-booking-btn {
+            background: var(--safari);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 15px;
+        }
+        
+        .safari-booking-btn:hover {
+            background: #b8941f;
+            transform: translateY(-2px);
+        }
+        
+        /* Property Listings */
+        .listings-section {
+            padding: 60px 0;
+            background: var(--light);
+        }
+        
+        .section-title {
+            margin-bottom: 30px;
+        }
+        
+        .section-title h2 {
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+        
+        .section-title p {
+            color: var(--light-dark);
+            max-width: 600px;
+        }
+        
+        .property-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            border: 1px solid var(--border);
+        }
+        
+        .property-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+        }
+        
+        .property-img {
+            height: 240px;
+            width: 100%;
+            object-fit: cover;
+            position: relative;
+        }
+        
+        .wishlist-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .wishlist-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .property-info {
+            padding: 18px;
+        }
+        
+        .property-type {
+            color: var(--light-dark);
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        
+        .property-title {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 8px;
+            font-size: 16px;
+            line-height: 1.3;
+        }
+        
+        .property-price {
+            font-weight: 700;
+            color: var(--dark);
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+        
+        .property-price span {
+            font-weight: 400;
+            font-size: 14px;
+        }
+        
+        .property-features {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid var(--border);
+            padding-top: 12px;
+            color: var(--light-dark);
+            font-size: 13px;
+        }
+        
+        .property-rating {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        /* Premium Features */
+        .features-section {
+            padding: 80px 0;
+            background: white;
+        }
+        
+        .feature-card {
+            text-align: center;
+            padding: 30px 20px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .feature-icon {
+            font-size: 40px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        /* Partners Section */
+        .partners-section {
+            padding: 60px 0;
+            background: var(--light);
+        }
+        
+        .partner-logo {
+            height: 60px;
+            filter: grayscale(100%);
+            opacity: 0.6;
+            transition: all 0.3s ease;
+        }
+        
+        .partner-logo:hover {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+        
+        /* Booking Modal */
+        .booking-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1050;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .booking-content {
+            background: white;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 0;
+        }
+        
+        .booking-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: between;
+            align-items: center;
+        }
+        
+        .booking-body {
+            padding: 24px;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--light-dark);
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer h5 {
+            font-weight: 600;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+        
+        .footer ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer ul li {
+            margin-bottom: 12px;
+        }
+        
+        .footer ul li a {
+            color: #b0b0b0;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+        
+        .footer ul li a:hover {
+            color: white;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: #444;
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            color: #b0b0b0;
+            font-size: 14px;
+        }
+        
+        .contact-info {
+            margin-top: 20px;
+        }
+        
+        .contact-info p {
+            margin-bottom: 8px;
+            color: #b0b0b0;
+            font-size: 14px;
+        }
+        
+        .email-link {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .email-link:hover {
+            text-decoration: underline;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            
+            .search-form {
+                flex-direction: column;
+                border-radius: 16px;
+                padding: 16px;
+            }
+            
+            .form-group {
+                width: 100%;
+                margin-bottom: 16px;
+                padding: 0;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+                padding-bottom: 16px;
+            }
+            
+            .form-group:last-child {
+                border-bottom: none;
+                padding-bottom: 0;
+            }
+            
+            .search-btn {
+                width: 100%;
+                margin-top: 10px;
+                justify-content: center;
+            }
+            
+            .user-menu span {
+                display: none;
+            }
+            
+            .server-status {
+                bottom: 10px;
+                right: 10px;
+                font-size: 10px;
+            }
+        }
+        
+        /* Login Modal */
+        .login-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1050;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .login-content {
+            background: white;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 450px;
+            padding: 0;
+            overflow: hidden;
+        }
+        
+        .login-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border);
+            text-align: center;
+        }
+        
+        .login-body {
+            padding: 24px;
+        }
+        
+        .login-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 24px;
+        }
+        
+        .login-tab {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .login-tab.active {
+            border-bottom: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .form-control-lg {
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            margin-bottom: 16px;
+            font-size: 16px;
+        }
+        
+        .form-control-lg:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(255, 56, 92, 0.2);
+        }
+        
+        .login-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 14px;
+            font-weight: 600;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 16px;
+        }
+        
+        .login-btn:hover {
+            background: var(--primary-dark);
+        }
+        
+        .divider {
+            text-align: center;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .divider::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--border);
+        }
+        
+        .divider span {
+            background: white;
+            padding: 0 15px;
+            color: var(--light-dark);
+            font-size: 14px;
+        }
+        
+        .social-login {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .social-btn {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: var(--dark);
+            font-size: 14px;
+        }
+        
+        .social-btn:hover {
+            border-color: var(--dark);
+        }
+    </style>
+</head>
+<body>
+    <!-- Server Status Indicator -->
+    <div class="server-status" id="serverStatus">
+        <span class="status-dot online"></span>
+        <span class="status-online">Server Online</span>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html"><i class="fas fa-home me-2"></i>$IRENGO</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="stays.html">Places to Stay</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="safaris.html">Africa Safaris <span class="safari-badge">NEW</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="experiences.html">Experiences</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="online-experiences.html">Online Experiences</a>
+                    </li>
+                </ul>
+                
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="become-host.html">Become a Host</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="openLoginModal()"><i class="fas fa-globe me-1"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <div class="user-menu" onclick="openLoginModal()">
+                            <i class="fas fa-bars"></i>
+                            <i class="fas fa-user-circle" style="font-size: 28px; color: var(--light-dark);"></i>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-overlay"></div>
+        <video autoplay muted loop class="hero-video">
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-waves-coming-to-the-beach-5016-large.mp4" type="video/mp4">
+            <!-- Fallback image -->
+            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="Luxury Stay Background" style="width: 100%; height: 100%; object-fit: cover;">
+        </video>
+        <div class="hero-content">
+            <h1 class="hero-title">Discover Extraordinary Stays & African Safaris</h1>
+            <p class="hero-subtitle">Luxury homes, unique experiences, and unforgettable wildlife adventures</p>
+            
+            <div class="search-container">
+                <form class="search-form" id="searchForm">
+                    <div class="form-group">
+                        <label class="form-label">WHERE</label>
+                        <input type="text" class="form-control" placeholder="Search destinations" id="searchDestination">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">CHECK IN</label>
+                        <input type="date" class="form-control" placeholder="Add dates" id="checkInDate">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">CHECK OUT</label>
+                        <input type="date" class="form-control" placeholder="Add dates" id="checkOutDate">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">GUESTS</label>
+                        <select class="form-control" id="guestsCount">
+                            <option>1 Guest</option>
+                            <option>2 Guests</option>
+                            <option>3 Guests</option>
+                            <option>4+ Guests</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="search-btn">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Loading Spinner -->
+    <div class="loading" id="loadingSpinner">
+        <div class="spinner"></div>
+        <p class="mt-3">Connecting to servers...</p>
+    </div>
+
+    <!-- Categories Section -->
+    <section class="categories-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Explore by property type</h2>
+                <p>Discover the perfect place to stay for your next trip</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <a href="apartments.html" class="category-card">
+                        <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="category-img" alt="Apartments">
+                        <div class="category-title">Apartments</div>
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <a href="beachfront.html" class="category-card">
+                        <img src="https://images.unsplash.com/photo-1510798831971-661eb04b3739?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="category-img" alt="Beachfront">
+                        <div class="category-title">Beachfront</div>
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <a href="cabins.html" class="category-card">
+                        <img src="https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="category-img" alt="Cabins">
+                        <div class="category-title">Cabins</div>
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <a href="luxury.html" class="category-card">
+                        <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="category-img" alt="Luxury">
+                        <div class="category-title">Luxury Stays</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Africa Safaris Section -->
+    <section class="safari-section">
+        <div class="container safari-content">
+            <div class="section-title text-center text-white">
+                <h2>African Safari Adventures</h2>
+                <p>Experience the wild beauty of Africa with our curated safari packages</p>
+            </div>
+            
+            <div class="row" id="safariListings">
+                <!-- Safari packages will be loaded from server -->
+            </div>
+            
+            <div class="text-center mt-4">
+                <a href="safaris.html" class="safari-booking-btn" style="width: auto; padding: 12px 30px;">View All Safari Packages</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Property Listings -->
+    <section class="listings-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Featured Luxury Stays</h2>
+                <p>Discover your perfect getaway from our curated selection of properties worldwide</p>
+            </div>
+            
+            <div class="row" id="propertyListings">
+                <!-- Properties will be loaded from server -->
+            </div>
+            
+            <div class="text-center mt-4">
+                <a href="stays.html" class="search-btn" style="width: auto; display: inline-flex; padding: 12px 30px;">Show All Properties</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Premium Features -->
+    <section class="features-section">
+        <div class="container">
+            <div class="section-title text-center">
+                <h2>Why Choose $IRENGO?</h2>
+                <p>We provide exceptional service and unique experiences</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h4>Secure Payments</h4>
+                        <p class="text-muted">Your payments are protected with industry-leading security</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h4>Verified Stays</h4>
+                        <p class="text-muted">Every property is personally verified for quality assurance</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h4>24/7 Support</h4>
+                        <p class="text-muted">Our team is available around the clock to assist you</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-globe-africa"></i>
+                        </div>
+                        <h4>Local Experts</h4>
+                        <p class="text-muted">Connect with local hosts for authentic experiences</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners Section -->
+    <section class="partners-section">
+        <div class="container">
+            <div class="section-title text-center">
+                <h2>Trusted Partners</h2>
+                <p>We work with the best in the industry</p>
+            </div>
+            
+            <div class="row align-items-center">
+                <div class="col text-center">
+                    <a href="https://www.booking.com" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Booking.com_logo.svg/2560px-Booking.com_logo.svg.png" class="partner-logo" style="height: 40px;" alt="Booking.com"></a>
+                </div>
+                <div class="col text-center">
+                    <a href="https://www.tripadvisor.com" target="_blank"><img src="https://static.tacdn.com/img2/brand_refresh/Tripadvisor_lockup_horizontal_secondary_registered.svg" class="partner-logo" alt="TripAdvisor"></a>
+                </div>
+                <div class="col text-center">
+                    <a href="https://www.safaribookings.com" target="_blank"><img src="https://cdn.safaribookings.com/public/safari/img/logo.png" class="partner-logo" alt="Safari Bookings"></a>
+                </div>
+                <div class="col text-center">
+                    <a href="https://www.lonelyplanet.com" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Lonely_Planet_logo.svg/2560px-Lonely_Planet_logo.svg.png" class="partner-logo" style="height: 30px;" alt="Lonely Planet"></a>
+                </div>
+                <div class="col text-center">
+                    <a href="https://www.airbnb.com" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Airbnb_Logo_B%C3%A9lo.svg/2560px-Airbnb_Logo_B%C3%A9lo.svg.png" class="partner-logo" style="height: 40px;" alt="Airbnb"></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <h5><i class="fas fa-home me-2"></i>$IRENGO</h5>
+                    <p class="mt-3" style="color: #b0b0b0;">Find your perfect stay anywhere in the world. Book unique homes, experiences, and African safaris.</p>
+                    <div class="contact-info">
+                        <p><i class="fas fa-envelope me-2"></i> 
+                            <a href="mailto:immanuel.w.sirengo@gmail.com" class="email-link">immanuel.w.sirengo@gmail.com</a>
+                        </p>
+                        <p><i class="fas fa-phone me-2"></i> +254 759540942</p>
+                        <p><i class="fas fa-map-marker-alt me-2"></i> Nairobi, Kenya</p>
+                    </div>
+                    <div class="social-links">
+                        <a href="https://facebook.com" class="social-link" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://twitter.com" class="social-link" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="https://instagram.com" class="social-link" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://linkedin.com" class="social-link" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://wa.me/254759540942" class="social-link" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-2 col-6 mb-4">
+                    <h5>Destinations</h5>
+                    <ul>
+                        <li><a href="kenya.html">Kenya</a></li>
+                        <li><a href="tanzania.html">Tanzania</a></li>
+                        <li><a href="south-africa.html">South Africa</a></li>
+                        <li><a href="botswana.html">Botswana</a></li>
+                        <li><a href="rwanda.html">Rwanda</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 col-6 mb-4">
+                    <h5>Support</h5>
+                    <ul>
+                        <li><a href="help-center.html">Help Center</a></li>
+                        <li><a href="safety.html">Safety Information</a></li>
+                        <li><a href="covid.html">COVID-19 Resources</a></li>
+                        <li><a href="support.html">Support</a></li>
+                        <li><a href="contact.html">Contact us</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 col-6 mb-4">
+                    <h5>Host</h5>
+                    <ul>
+                        <li><a href="become-host.html">Host your home</a></li>
+                        <li><a href="host-experiences.html">Host an experience</a></li>
+                        <li><a href="resource-center.html">Resource Center</a></li>
+                        <li><a href="community-center.html">Community Center</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 col-6 mb-4">
+                    <h5>Company</h5>
+                    <ul>
+                        <li><a href="about.html">About $IRENGO</a></li>
+                        <li><a href="newsroom.html">Newsroom</a></li>
+                        <li><a href="investors.html">Investors</a></li>
+                        <li><a href="careers.html">Careers</a></li>
+                        <li><a href="partners.html">Partners</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 $IRENGO, Inc. All rights reserved. <span style="margin: 0 10px;">·</span> 
+                <a href="privacy.html" style="color: #b0b0b0; text-decoration: none;">Privacy</a> <span style="margin: 0 10px;">·</span> 
+                <a href="terms.html" style="color: #b0b0b0; text-decoration: none;">Terms</a> <span style="margin: 0 10px;">·</span> 
+                <a href="sitemap.html" style="color: #b0b0b0; text-decoration: none;">Sitemap</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="login-modal" id="loginModal">
+        <div class="login-content">
+            <div class="login-header">
+                <h4>Log in or sign up</h4>
+            </div>
+            <div class="login-body">
+                <div class="login-tabs">
+                    <div class="login-tab active" id="loginTab">Log In</div>
+                    <div class="login-tab" id="signupTab">Sign Up</div>
+                </div>
+                
+                <div id="loginForm">
+                    <input type="email" class="form-control form-control-lg" placeholder="Email" id="loginEmail">
+                    <input type="password" class="form-control form-control-lg" placeholder="Password" id="loginPassword">
+                    <button class="login-btn" onclick="handleLogin()">Continue</button>
+                    
+                    <div class="divider">
+                        <span>or</span>
+                    </div>
+                    
+                    <div class="social-login">
+                        <a href="#" class="social-btn">
+                            <i class="fab fa-facebook"></i> Facebook
+                        </a>
+                        <a href="#" class="social-btn">
+                            <i class="fab fa-google"></i> Google
+                        </a>
+                    </div>
+                    
+                    <div style="text-align: center; font-size: 14px; color: var(--light-dark);">
+                        <a href="#" style="color: var(--dark);">Forgot password?</a>
+                    </div>
+                </div>
+                
+                <div id="signupForm" style="display: none;">
+                    <input type="text" class="form-control form-control-lg" placeholder="Full name" id="signupName">
+                    <input type="email" class="form-control form-control-lg" placeholder="Email" id="signupEmail">
+                    <input type="password" class="form-control form-control-lg" placeholder="Password" id="signupPassword">
+                    <button class="login-btn" onclick="handleSignup()">Agree and Continue</button>
+                    
+                    <div class="divider">
+                        <span>or</span>
+                    </div>
+                    
+                    <div class="social-login">
+                        <a href="#" class="social-btn">
+                            <i class="fab fa-facebook"></i> Facebook
+                        </a>
+                        <a href="#" class="social-btn">
+                            <i class="fab fa-google"></i> Google
+                        </a>
+                    </div>
+                    
+                    <div style="text-align: center; font-size: 12px; color: var(--light-dark); margin-top: 16px;">
+                        By continuing, you agree to $IRENGO's <a href="#" style="color: var(--dark);">Terms of Service</a> and acknowledge the <a href="#" style="color: var(--dark);">Privacy Policy</a>.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Modal -->
+    <div class="booking-modal" id="bookingModal">
+        <div class="booking-content">
+            <div class="booking-header">
+                <h4>Book Your Stay</h4>
+                <button class="close-btn" onclick="closeBookingModal()">&times;</button>
+            </div>
+            <div class="booking-body" id="bookingBody">
+                <!-- Booking content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Safari Booking Modal -->
+    <div class="booking-modal" id="safariBookingModal">
+        <div class="booking-content">
+            <div class="booking-header">
+                <h4>Book Your Safari Adventure</h4>
+                <button class="close-btn" onclick="closeSafariBookingModal()">&times;</button>
+            </div>
+            <div class="booking-body" id="safariBookingBody">
+                <!-- Safari booking content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Server Configuration
+        const SERVER_CONFIG = {
+            // Mock API endpoints - Replace with your actual server URLs
+            baseUrl: 'https://api.irengo.com',
+            endpoints: {
+                properties: '/api/properties',
+                safaris: '/api/safaris',
+                bookings: '/api/bookings',
+                users: '/api/users',
+                search: '/api/search'
+            },
+            // Fallback mock server for demonstration
+            mockServer: 'https://jsonplaceholder.typicode.com'
+        };
+
+        // Server Status Management
+        let serverOnline = true;
+
+        // Check server status
+        async function checkServerStatus() {
+            try {
+                const response = await fetch(`${SERVER_CONFIG.mockServer}/posts/1`, {
+                    method: 'GET',
+                    timeout: 5000
+                });
+                
+                if (response.ok) {
+                    serverOnline = true;
+                    updateServerStatus(true);
+                } else {
+                    serverOnline = false;
+                    updateServerStatus(false);
+                }
+            } catch (error) {
+                serverOnline = false;
+                updateServerStatus(false);
+                console.warn('Server offline, using local data:', error);
+            }
+        }
+
+        // Update server status UI
+        function updateServerStatus(online) {
+            const statusElement = document.getElementById('serverStatus');
+            if (online) {
+                statusElement.innerHTML = '<span class="status-dot online"></span><span class="status-online">Server Online</span>';
+            } else {
+                statusElement.innerHTML = '<span class="status-dot offline"></span><span class="status-offline">Server Offline</span>';
+            }
+        }
+
+        // Show loading spinner
+        function showLoading() {
+            document.getElementById('loadingSpinner').style.display = 'block';
+        }
+
+        // Hide loading spinner
+        function hideLoading() {
+            document.getElementById('loadingSpinner').style.display = 'none';
+        }
+
+        // Fetch data from server with fallback
+        async function fetchData(endpoint, fallbackData) {
+            showLoading();
+            
+            try {
+                if (!serverOnline) {
+                    throw new Error('Server offline');
+                }
+
+                // Try to fetch from actual server
+                let response;
+                try {
+                    response = await fetch(`${SERVER_CONFIG.baseUrl}${endpoint}`, {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + (localStorage.getItem('authToken') || '')
+                        }
+                    });
+                } catch (serverError) {
+                    // Fallback to mock server for demo
+                    response = await fetch(`${SERVER_CONFIG.mockServer}${endpoint}`);
+                }
+
+                if (!response.ok) {
+                    throw new Error('Server response not OK');
+                }
+
+                const data = await response.json();
+                hideLoading();
+                return data;
+            } catch (error) {
+                console.warn(`Using fallback data for ${endpoint}:`, error);
+                hideLoading();
+                return fallbackData;
+            }
+        }
+
+        // Send data to server
+        async function sendData(endpoint, data) {
+            showLoading();
+            
+            try {
+                const response = await fetch(`${SERVER_CONFIG.baseUrl}${endpoint}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + (localStorage.getItem('authToken') || '')
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    hideLoading();
+                    return { success: true, data: result };
+                } else {
+                    throw new Error('Server error: ' + response.status);
+                }
+            } catch (error) {
+                console.error('Error sending data:', error);
+                hideLoading();
+                return { success: false, error: error.message };
+            }
+        }
+
+        // Handle user login
+        async function handleLogin() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            if (!email || !password) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            const result = await sendData(SERVER_CONFIG.endpoints.users + '/login', {
+                email: email,
+                password: password
+            });
+
+            if (result.success) {
+                localStorage.setItem('authToken', result.data.token);
+                localStorage.setItem('user', JSON.stringify(result.data.user));
+                alert('Login successful!');
+                closeLoginModal();
+                updateUserInterface();
+            } else {
+                alert('Login failed: ' + result.error);
+            }
+        }
+
+        // Handle user signup
+        async function handleSignup() {
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+
+            if (!name || !email || !password) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            const result = await sendData(SERVER_CONFIG.endpoints.users + '/register', {
+                name: name,
+                email: email,
+                password: password
+            });
+
+            if (result.success) {
+                localStorage.setItem('authToken', result.data.token);
+                localStorage.setItem('user', JSON.stringify(result.data.user));
+                alert('Account created successfully!');
+                closeLoginModal();
+                updateUserInterface();
+            } else {
+                alert('Signup failed: ' + result.error);
+            }
+        }
+
+        // Update UI based on user login status
+        function updateUserInterface() {
+            const user = JSON.parse(localStorage.getItem('user') || 'null');
+            if (user) {
+                // Update navigation to show user is logged in
+                const userMenu = document.querySelector('.user-menu');
+                if (userMenu) {
+                    userMenu.innerHTML = `
+                        <i class="fas fa-bars"></i>
+                        <img src="${user.avatar || ''}" style="width: 28px; height: 28px; border-radius: 50%;" onerror="this.style.display='none'">
+                        <span>${user.name}</span>
+                    `;
+                }
+            }
+        }
+
+        // Load properties from server
+        async function loadProperties() {
+            const fallbackProperties = [
+                {
+                    id: 1,
+                    title: "Modern Apartment in Downtown",
+                    type: "Entire apartment",
+                    location: "New York, NY",
+                    price: 120,
+                    image: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                    bedrooms: 2,
+                    bathrooms: 1,
+                    guests: 4,
+                    rating: 4.9,
+                    reviews: 128
+                },
+                // ... other fallback properties
+            ];
+
+            const properties = await fetchData(SERVER_CONFIG.endpoints.properties, fallbackProperties);
+            displayProperties(properties);
+        }
+
+        // Load safaris from server
+        async function loadSafaris() {
+            const fallbackSafaris = [
+                {
+                    id: 1,
+                    title: "Masai Mara Great Migration",
+                    location: "Kenya",
+                    duration: "7 Days",
+                    price: 2450,
+                    image: "https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                    description: "Witness the spectacular Great Migration in the Masai Mara.",
+                    includes: ["Luxury tent accommodation", "All meals", "Game drives"],
+                    rating: 4.9,
+                    reviews: 42
+                },
+                // ... other fallback safaris
+            ];
+
+            const safaris = await fetchData(SERVER_CONFIG.endpoints.safaris, fallbackSafaris);
+            displaySafaris(safaris);
+        }
+
+        // Display properties
+        function displayProperties(properties) {
+            const propertyListings = document.getElementById('propertyListings');
+            propertyListings.innerHTML = '';
+            
+            properties.forEach(property => {
+                const propertyCard = `
+                    <div class="col-lg-4 col-md-6">
+                        <div class="property-card">
+                            <div style="position: relative;">
+                                <img src="${property.image}" class="property-img" alt="${property.title}">
+                                <div class="wishlist-btn">
+                                    <i class="far fa-heart"></i>
+                                </div>
+                            </div>
+                            <div class="property-info">
+                                <div class="property-type">${property.type} · ${property.location}</div>
+                                <h3 class="property-title">${property.title}</h3>
+                                <div class="property-price">$${property.price} <span>per night</span></div>
+                                <div class="property-features">
+                                    <span><i class="fas fa-bed me-1"></i> ${property.bedrooms} beds</span>
+                                    <span><i class="fas fa-bath me-1"></i> ${property.bathrooms} baths</span>
+                                    <span><i class="fas fa-user-friends me-1"></i> ${property.guests} guests</span>
+                                    <div class="property-rating">
+                                        <i class="fas fa-star"></i> ${property.rating} <span style="color: var(--light-dark);">(${property.reviews})</span>
+                                    </div>
+                                </div>
+                                <button class="search-btn" onclick="openBookingModal(${property.id})" style="width: 100%; margin-top: 12px;">
+                                    <i class="fas fa-calendar-check me-2"></i> Book Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                propertyListings.innerHTML += propertyCard;
+            });
+        }
+
+        // Display safaris
+        function displaySafaris(safaris) {
+            const safariListings = document.getElementById('safariListings');
+            safariListings.innerHTML = '';
+            
+            safaris.forEach(safari => {
+                const safariCard = `
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="safari-card">
+                            <img src="${safari.image}" class="property-img" alt="${safari.title}">
+                            <div class="property-info">
+                                <div class="property-type">${safari.location} · ${safari.duration}</div>
+                                <h3 class="property-title">${safari.title}</h3>
+                                <div class="property-price">$${safari.price} <span>per person</span></div>
+                                <div class="property-features">
+                                    <span><i class="fas fa-bed me-1"></i> Luxury Tents</span>
+                                    <span><i class="fas fa-car me-1"></i> Game Drives</span>
+                                    <div class="property-rating">
+                                        <i class="fas fa-star"></i> ${safari.rating} <span>(${safari.reviews})</span>
+                                    </div>
+                                </div>
+                                <button class="safari-booking-btn" onclick="openSafariBooking(${safari.id})">Book Safari</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                safariListings.innerHTML += safariCard;
+            });
+        }
+
+        // Handle search form submission
+        document.getElementById('searchForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const destination = document.getElementById('searchDestination').value;
+            const checkIn = document.getElementById('checkInDate').value;
+            const checkOut = document.getElementById('checkOutDate').value;
+            const guests = document.getElementById('guestsCount').value;
+
+            if (!destination) {
+                alert('Please enter a destination');
+                return;
+            }
+
+            // Send search request to server
+            const searchData = {
+                destination: destination,
+                checkIn: checkIn,
+                checkOut: checkOut,
+                guests: guests
+            };
+
+            const result = await sendData(SERVER_CONFIG.endpoints.search, searchData);
+            
+            if (result.success) {
+                // In a real app, you would redirect to search results page
+                alert(`Found ${result.data.count} properties in ${destination}`);
+            } else {
+                alert('Search failed. Please try again.');
+            }
+        });
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Check server status
+            await checkServerStatus();
+            
+            // Load data from server
+            await loadProperties();
+            await loadSafaris();
+            
+            // Update UI based on login status
+            updateUserInterface();
+            
+            // Set minimum date for check-in to today
+            const today = new Date().toISOString().split('T')[0];
+            document.querySelectorAll('input[type="date"]').forEach(input => {
+                input.min = today;
+            });
+
+            // Periodically check server status
+            setInterval(checkServerStatus, 30000); // Every 30 seconds
+        });
+
+        // Keep the existing modal functions from previous code
+        function openLoginModal() {
+            document.getElementById('loginModal').style.display = 'flex';
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
+        }
+
+        function openBookingModal(propertyId) {
+            // Implementation from previous code
+        }
+
+        function closeBookingModal() {
+            document.getElementById('bookingModal').style.display = 'none';
+        }
+
+        function openSafariBooking(safariId) {
+            // Implementation from previous code
+        }
+
+        function closeSafariBookingModal() {
+            document.getElementById('safariBookingModal').style.display = 'none';
+        }
+
+        // Login/Signup tab switching
+        document.getElementById('loginTab').addEventListener('click', function() {
+            document.getElementById('loginTab').classList.add('active');
+            document.getElementById('signupTab').classList.remove('active');
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('signupForm').style.display = 'none';
+        });
+
+        document.getElementById('signupTab').addEventListener('click', function() {
+            document.getElementById('signupTab').classList.add('active');
+            document.getElementById('loginTab').classList.remove('active');
+            document.getElementById('signupForm').style.display = 'block';
+            document.getElementById('loginForm').style.display = 'none';
+        });
+
+        // Close modals when clicking outside
+        window.addEventListener('click', function(e) {
+            if (e.target === document.getElementById('loginModal')) {
+                closeLoginModal();
+            }
+            if (e.target === document.getElementById('bookingModal')) {
+                closeBookingModal();
+            }
+            if (e.target === document.getElementById('safariBookingModal')) {
+                closeSafariBookingModal();
+            }
+        });
+    </script>
+</body>
+</html>
