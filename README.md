@@ -52,7 +52,7 @@ Africa Safaris is a revolutionary platform that connects travelers with extraord
 ### Frontend
 - **HTML5** - Semantic markup structure
 - **CSS3** - Modern styling with custom properties
-- **Bootstrap 5** - Responsive grid system and components
+- **Tailwind** - Responsive grid system and components
 - **Font Awesome** - Beautiful iconography
 - **JavaScript** - Interactive functionality
 
@@ -161,22 +161,15 @@ We welcome contributions from developers, designers, and Africa enthusiasts! Her
 ## 🔗 Connect With Us
 
 - 🌐 **Website**: [Coming Soon]
-- 📧 **Email**: contact@irengo.com
-- 🐦 **Twitter**: [@IrengoAfrica](https://twitter.com/IrengoAfrica)
-- 📘 **Facebook**: [Irengo Africa](https://facebook.com/IrengoAfrica)
-- 📸 **Instagram**: [@irengo_africa](https://instagram.com/irengo_africa)
+- 📧 **Email**: contact@.com
+- 🐦 **Twitter**: [](https://twitter.com/)
+- 📘 **Facebook**: [](https://facebook.com/)
+- 📸 **Instagram**: [](https://instagram.com/)
 
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
-
-- **Bootstrap Team** - For the excellent CSS framework
-- **Font Awesome** - For the beautiful icons
-- **African Tourism Board** - For inspiration and support
-- **Local Communities** - For sharing their stories and culture
-- **Wildlife Conservation Organizations** - For their important work
 
 ---
 
